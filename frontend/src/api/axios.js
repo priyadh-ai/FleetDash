@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://fleetdash-1.onrender.com/api";
 
 const API = axios.create({
   baseURL: API_BASE_URL,
@@ -13,9 +15,11 @@ const API = axios.create({
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -32,15 +36,21 @@ API.interceptors.response.use(
       if (status === 401) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+
         window.location.href = "/login";
       }
 
       // Server error
       if (status >= 500) {
-        console.error("Server error:", error.response.data?.message);
+        console.error(
+          "Server error:",
+          error.response.data?.message
+        );
       }
     } else if (error.request) {
-      console.error("Network error: No response received from server");
+      console.error(
+        "Network error: No response received from server"
+      );
     }
 
     return Promise.reject(error);
