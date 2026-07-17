@@ -31,6 +31,18 @@ app.use("/api/vehicles", require("./routes/vehicleRoutes"));
 // AI Routes (includes maintenance, health, drivers, route, fuel, geofence, reports, analytics, audit, voice)
 app.use("/api/ai", require("./routes/aiRoutes"));
 
+// Driver Routes
+app.use("/api/drivers", require("./routes/driverRoutes"));
+
+// Settings Routes
+app.use("/api/settings", require("./routes/settingsRoutes"));
+
+// Alert Routes
+app.use("/api/alerts", require("./routes/alertRoutes"));
+
+// Notification Routes
+app.use("/api/notifications", require("./routes/notificationRoutes"));
+
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({

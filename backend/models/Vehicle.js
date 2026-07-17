@@ -1,74 +1,94 @@
 const mongoose = require("mongoose");
 
-
 const vehicleSchema = new mongoose.Schema({
+  vehicleId: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
 
-    vehicleId:{
-        type:String,
-        required:true,
-        unique:true
-    },
+  driver: {
+    type: String,
+    default: "Unknown",
+    trim: true
+  },
 
+  phone: {
+    type: String,
+    default: "+91-9876543210",
+    trim: true
+  },
 
-    driver:{
-        type:String,
-        default:"Unknown"
-    },
+  status: {
+    type: String,
+    enum: ["Active", "Offline", "Idle", "Maintenance"],
+    default: "Offline"
+  },
 
-    phone:{
-        type:String,
-        default:"+91-9876543210"
-    },
+  type: {
+    type: String,
+    enum: ["Truck", "Car", "Bus", "Bike", "Van"],
+    default: "Truck"
+  },
 
-    status:{
-        type:String,
-        default:"Offline"
-    },
+  speed: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
 
+  heading: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 360
+  },
 
-    speed:{
-        type:Number,
-        default:0
-    },
+  location: {
+    lat: { type: Number, default: 0 },
+    lng: { type: Number, default: 0 }
+  },
 
+  fuel: {
+    type: Number,
+    default: 100,
+    min: 0,
+    max: 100
+  },
 
-    location:{
+  distance: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
 
-        lat:{
-            type:Number,
-            default:0
-        },
+  engineTemp: {
+    type: Number,
+    default: 90
+  },
 
-        lng:{
-            type:Number,
-            default:0
-        }
+  batteryLevel: {
+    type: Number,
+    default: 100,
+    min: 0,
+    max: 100
+  },
 
-    },
+  tirePressure: {
+    type: Number,
+    default: 35
+  },
 
-
-    fuel:{
-        type:Number,
-        default:100
-    },
-
-
-    distance:{
-        type:Number,
-        default:0
-    },
-
-
-    lastUpdated:{
-        type:Date,
-        default:Date.now
-    }
-
-
+  lastUpdated: {
+    type: Date,
+    default: Date.now
+  }
+}, {
+  timestamps: true
 });
 
+// Index for geospatial queries
+vehicleSchema.index({ "location.lat": 1, "location.lng": 1 });
 
-module.exports = mongoose.model(
-    "Vehicle",
-    vehicleSchema
-);
+module.exports = mongoose.model("Vehicle", vehicleSchema);

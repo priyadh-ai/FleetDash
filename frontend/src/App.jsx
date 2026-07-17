@@ -4,6 +4,8 @@ import Vehicles from "./pages/Vehicles";
 import Map from "./pages/Map";
 import Alerts from "./pages/Alerts";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import CommandCenter from "./pages/CommandCenter";
 import Analytics from "./pages/Analytics";
 import Reports from "./pages/Reports";
@@ -23,6 +25,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/vehicles" element={<ProtectedRoute><Vehicles /></ProtectedRoute>} />
